@@ -78,3 +78,15 @@ void GrayImage::Display_X_Server() { //彈出視窗顯示圖片
 void GrayImage::Display_ASCII() { //終端機顯示圖片
     data_loader.Display_Gray_ASCII(w, h, pixels);
 }
+int **GrayImage::get_pixels() { //拿pixels
+    return pixels;
+}
+void GrayImage::set_pixels(int w, int h, int p) { //設定pixels
+    if(pixels == nullptr) {
+        pixels = new int*[h];
+        for (int i = 0; i < h; ++i) {
+            pixels[i] = new int[w];
+        }
+    }
+    pixels[h][w] = p; //設定像素值
+}
