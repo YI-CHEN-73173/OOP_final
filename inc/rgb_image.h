@@ -22,7 +22,10 @@ class RGBImage : public Image{
         void DumpImage(string filename);
         void Display_X_Server();
         void Display_ASCII();
-        //void Display_CMD() override;
+        //void Display_CMD();
+
+        int ***get_pixels(); //拿pixels
+        void set_pixels(int w, int h, int c, int p); //設定pixels
 };
 
 #endif

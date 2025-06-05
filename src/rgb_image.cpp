@@ -100,3 +100,18 @@ void RGBImage::Display_X_Server() {
 void RGBImage::Display_ASCII() {
     data_loader.Display_RGB_ASCII(w, h, pixels);
 }
+int ***RGBImage::get_pixels() {
+    return pixels;
+}
+void RGBImage::set_pixels(int w, int h, int c, int p) {
+    if (pixels == nullptr) {
+        pixels = new int**[h];
+        for (int i = 0; i < h; ++i) {
+            pixels[i] = new int*[w];
+            for (int j = 0; j < w; ++j) {
+                pixels[i][j] = new int[3]; // 3 channels for RGB
+            }
+        }
+    }
+    pixels[h][w][c] = p;
+}
