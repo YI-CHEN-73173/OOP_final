@@ -4,6 +4,7 @@
 #include "image_encryption.h"
 using namespace std;
 
+//-------------------------------------------------LSB
 RGBImage* ImageEncryption::encode_LSB(string filename, string password) {
     RGBImage* image = new RGBImage();
     image->LoadImage(filename);
@@ -123,4 +124,147 @@ string ImageEncryption::decode_LSB(RGBImage* image) {
     bits.clear();
     bits.shrink_to_fit(); // 強制釋放記憶體
     return password;
+}
+//--------------------------------------------------------XOR
+RGBImage* ImageEncryption::encode_XOR(string filename, string password) { //預設key
+    string XOR_key="OOP";
+    return encode_XOR(filename, password, XOR_key);
+}
+RGBImage* ImageEncryption::encode_XOR(string filename, string password, string key) {
+    if (password.empty() || key.empty()) {
+        cout << "Password or key is empty." << endl;
+        return nullptr;
+    }
+
+    string cipher = "";
+    int pass_len = password.length(); // password長度
+    int key_len = key.length(); // key長度
+
+    for (int i = 0; i < pass_len; i++) {
+        cipher += password[i] ^ key[i % key_len];  // 循環使用key並XOR
+    }
+
+    return encode_LSB(filename, cipher);  // 將加密後的密碼藏入圖片中
+}
+string ImageEncryption::decode_XOR(RGBImage* image) { //預設key
+    string XOR_key="OOP";
+    return decode_XOR(image, XOR_key);
+}
+string ImageEncryption::decode_XOR(RGBImage* image, string key) {
+    if (image == nullptr || image->get_w() == 0 || image->get_h() == 0) {
+        cout << "Invalid image for decoding." << endl;
+        return "";
+    }
+
+    string cipher = decode_LSB(image); // 從圖片中解密出密碼
+    if (cipher.empty()) {
+        cout << "Failed to decode the image." << endl;
+        return "";
+    }
+
+    string pass = "";
+    int cipher_len = cipher.length();
+    int key_len = key.length();
+
+    for (int i = 0; i < cipher_len; i++) {
+        pass += cipher[i] ^ key[i % key_len]; // 循環使用key並XOR
+    }
+
+    return pass; // 返回解密後的密碼
+}
+//--------------------------------------------------------Caesar
+RGBImage* ImageEncryption::encode_Caesar(string filename, string password) {
+    if (password.empty()) {
+        cout << "Password is empty." << endl;
+        return nullptr;
+    }
+
+    string cipher = "";
+    for (char ch : password) {
+        int ascii_val = static_cast<int>(ch);
+        int encrypted_val = (ascii_val + C_shift) % 256; // 限制在0~255的範圍
+        cipher += static_cast<char>(encrypted_val);
+    }
+
+    return encode_LSB(filename, cipher); // 將加密後的密碼藏入圖片中
+}
+string ImageEncryption::decode_Caesar(RGBImage* image) {
+    if (image == nullptr || image->get_w() == 0 || image->get_h() == 0) {
+        cout << "Invalid image for decoding." << endl;
+        return "";
+    }
+
+    string cipher = decode_LSB(image); // 從圖片中解密出密碼
+    if (cipher.empty()) {
+        cout << "Failed to decode the image." << endl;
+        return "";
+    }
+
+    string pass = "";
+    for (char ch : cipher) {
+        int ascii_val = static_cast<int>(ch);
+        int plain = (ascii_val - C_shift + 256) % 256;
+        pass += static_cast<char>(plain);
+    }
+
+    return pass; // 返回解密後的密碼
+}
+//--------------------------------------------------------Substitution
+void ImageEncryption::generate_table() {
+    int range = 256;
+    vector<int> values;
+
+    for (int i = 0; i < range; ++i)
+        values.push_back(i);
+
+    srand(time(NULL));
+    for (int i = range - 1; i > 0; --i) {
+        int j = rand() % (i + 1);
+        swap(values[i], values[j]);
+    }
+
+    subs.clear();
+    reverse_subs.clear();
+    for (int i = 0; i < range; ++i) {
+        subs[i] = values[i];
+        reverse_subs[values[i]] = i;
+    }
+}
+RGBImage* ImageEncryption::encode_Subs(string filename, string password) {
+    if (password.empty()) {
+        cout << "Password is empty." << endl;
+        return nullptr;
+    }
+
+    generate_table(); // 每次加密時產生新的對照表
+
+    string cipher = "";
+    for (unsigned char ch : password) {
+        cipher += static_cast<unsigned char>(subs[ch]);
+    }
+
+    return encode_LSB(filename, cipher);
+}
+string ImageEncryption::decode_Subs(RGBImage* image) {
+    if (!image || image->get_w() == 0 || image->get_h() == 0) {
+        cout << "Invalid image." << endl;
+        return "";
+    }
+
+    string cipher = decode_LSB(image);
+    if (cipher.empty()) {
+        cout << "Decoded string is empty." << endl;
+        return "";
+    }
+
+    string pass = "";
+    for (unsigned char ch : cipher) {
+        if (reverse_subs.find(ch) != reverse_subs.end()) {
+            pass += static_cast<unsigned char>(reverse_subs[ch]);
+        } else {
+            cout << "Character '" << ch << "' not found in reverse table." << endl;
+            return "";
+        }
+    }
+    return pass;
 }

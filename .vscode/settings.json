@@ -6,6 +6,8 @@
         "deque": "cpp",
         "vector": "cpp",
         "xlocinfo": "cpp",
-        "xutility": "cpp"
+        "xutility": "cpp",
+        "istream": "cpp",
+        "map": "cpp"
     }
 }
