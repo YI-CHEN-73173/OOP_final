@@ -103,15 +103,12 @@ void RGBImage::Display_ASCII() {
 int ***RGBImage::get_pixels() {
     return pixels;
 }
-void RGBImage::set_pixels(int w, int h, int c, int p) {
+void RGBImage::set_pixels(int h, int w, int c, int p) {
     if (pixels == nullptr) {
-        pixels = new int**[h];
-        for (int i = 0; i < h; ++i) {
-            pixels[i] = new int*[w];
-            for (int j = 0; j < w; ++j) {
-                pixels[i][j] = new int[3]; // 3 channels for RGB
-            }
-        }
+        cout << "Error: no image." << endl;
     }
-    pixels[h][w][c] = p;
+    else{
+        pixels[h][w][c] = p;
+    }
+    return;
 }
