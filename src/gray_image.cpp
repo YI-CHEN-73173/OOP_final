@@ -21,7 +21,7 @@ GrayImage::GrayImage(int width, int height, int **p) : Image(width, height) {
         }
     }
 }
-GrayImage::GrayImage(GrayImage &gi): Image(gi.get_w(), gi.get_h()) {
+GrayImage::GrayImage(const GrayImage &gi): Image(gi.get_w(), gi.get_h()) {
     pixels = new int*[h];
     for (int i = 0; i < h; ++i) {
         pixels[i] = new int[w];

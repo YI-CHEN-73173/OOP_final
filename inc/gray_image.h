@@ -13,7 +13,7 @@ class GrayImage : public Image{
         GrayImage();
         GrayImage(int width, int height);
         GrayImage(int width,int height, int **p);
-        GrayImage(GrayImage &gi); // Copy constructor
+        GrayImage(const GrayImage &gi); // Copy constructor
         ~GrayImage();
 
         GrayImage& operator=(GrayImage &gi);   // Assignment operator
@@ -23,7 +23,6 @@ class GrayImage : public Image{
         void Display_X_Server();//彈出視窗顯示圖片
         void Display_ASCII();//終端機顯示圖片
         //void Display_CMD();
-
         int **get_pixels(); //拿pixels
         void set_pixels(int w, int h, int p); //設定pixels
 };

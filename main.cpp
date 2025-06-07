@@ -4,6 +4,138 @@
 #include "image_encryption.h"
 #include "bit_field_filter.h"
 
+#include<iostream>
+#include <filesystem>
+#include <vector>
+#include <string>
+using namespace std;
+namespace fs = std::filesystem;
+# define CASE_FLIP         0b00000001
+# define CASE_MOSAIC       0b00000010
+# define CASE_GAUSSIAN     0b00000100
+# define CASE_LAPLACIAN    0b00001000
+# define CASE_FISHEYE      0b00010000
+# define CASE_RESTORATION  0b00100000
+# define CASE_ROTATION     0b01000000
+# define CASE_SPECIFICATION 0b10000000
+
+void LoadImageFilenames(const std::string& folderPath, std::vector<std::string>& filenames) {
+    filenames.clear(); 
+    for (const auto& entry : fs::directory_iterator(folderPath)) {
+        if (entry.is_regular_file()) {
+            std::string path = entry.path().string();
+            if (path.ends_with(".jpg") || path.ends_with(".png") || path.ends_with(".bmp")) {
+                filenames.push_back(path);
+            }
+        }
+    }
+}
+
+
+void loadCase(int8_t option, GrayImage* img, BitFieldFilter* filter)
+{
+    if (option & CASE_FLIP) {
+        img = filter->HorizontalFlip(img);
+    }
+    if (option & CASE_MOSAIC) {
+        img = filter->MosaicFilter(img, 10);
+    }
+    if (option & CASE_GAUSSIAN) {
+        img = filter->GaussianFilter(img, 5, 1.0);
+    }
+    if (option & CASE_LAPLACIAN) {
+        img = filter->LaplacianFilter(img);
+    }
+    if (option & CASE_FISHEYE) {
+        img = filter->FisheyeFilter(img);
+    }
+    if (option & CASE_RESTORATION) {
+        img = filter->ImageRestoration(img);
+    }
+    if (option & CASE_ROTATION) {
+        img = filter->ImageRotate(img, 30.0f);
+    }
+    if (option & CASE_SPECIFICATION) {
+        cout << "Image List:" << endl;
+        vector<string> filenames;
+        LoadImageFilenames("Image-Folder", filenames);
+        for (const auto& name : filenames) {
+            fs::path p(name);
+            cout << p.filename().string() << endl;
+        }
+        string picname;
+        while (true) {
+            cout << "Which picture do you want to process (enter the name from image list): ";
+            cin >> picname; 
+            cin.ignore();
+            auto it = std::find_if(filenames.begin(), filenames.end(),
+                [&picname](const std::string& fullpath) {
+                    return fs::path(fullpath).filename() == picname;
+                });
+            if (it != filenames.end())  break;
+            else cout << "❌ Picture not found. Please enter a valid name from the list." << endl;
+        }
+        GrayImage* img2 = new GrayImage();
+        img2->LoadImage("Image-Folder/" + picname);
+        img = filter->HistogramSpecification(img, img2);
+        delete img2; 
+    }
+    img->Display_X_Server();
+}
+
+void loadCase(int8_t option, RGBImage* img, BitFieldFilter* filter)
+{
+    
+    if (option & CASE_FLIP) {
+        img = filter->HorizontalFlip(img);
+    }
+    if (option & CASE_MOSAIC) {
+        img = filter->MosaicFilter(img, 10);
+    }
+    if (option & CASE_GAUSSIAN) {
+        img = filter->GaussianFilter(img, 5, 1.0);
+    }
+    if (option & CASE_LAPLACIAN) {
+        img = filter->LaplacianFilter(img);
+    }
+    if (option & CASE_FISHEYE) {
+        img = filter->FisheyeFilter(img);
+    }
+    if (option & CASE_RESTORATION) {
+        img = filter->ImageRestoration(img);
+    }
+    if (option & CASE_ROTATION) {
+        img = filter->ImageRotate(img, 30.0f);
+    }
+    if (option & CASE_SPECIFICATION) {
+        cout << "Image List:" << endl;
+        vector<string> filenames;
+        LoadImageFilenames("Image-Folder", filenames);
+        for (const auto& name : filenames) {
+            fs::path p(name);
+            cout << p.filename().string() << endl;
+        }
+        string picname;
+        while (true) {
+            cout << "Which picture do you want to process (enter the name from image list): ";
+            cin >> picname; 
+            cin.ignore();
+            auto it = std::find_if(filenames.begin(), filenames.end(),
+                [&picname](const std::string& fullpath) {
+                    return fs::path(fullpath).filename() == picname;
+                });
+            if (it != filenames.end())  break;
+            else cout << "❌ Picture not found. Please enter a valid name from the list." << endl;
+        }
+        RGBImage* img2 = new RGBImage();
+        img2->LoadImage("Image-Folder/" + picname);
+        img = filter->HistogramSpecification(img, img2);
+        delete img2; 
+    }
+    img->Display_X_Server();
+}
+
+
 int main(int argc, char *argv[]){
     Image *img1 = new GrayImage();
     img1->LoadImage("Image-Folder/lena.jpg");
@@ -20,12 +152,82 @@ int main(int argc, char *argv[]){
     img2->Display_ASCII();
     delete img2;
     img2 = nullptr;
-    
-    // some bit field filter design driven code here
-
-    // some photo mosaic driven code here
-
-    cout<<endl;
+  
+    cout<<"**************************************************"<<endl;
+    int fnum;
+    while(1){
+        cout << "Image List:" << endl;
+        vector<string> filenames;
+        string folder = "Image-Folder"; 
+        LoadImageFilenames(folder, filenames);
+        for (const auto& name : filenames) {
+            fs::path p(name);
+            cout << p.filename().string() << endl;
+        }
+        string picname;
+        RGBImage* img1 = new RGBImage();
+        
+        while (true) {
+            cout << "Which picture do you want to process (enter the name from image list): ";
+            cin >> picname; 
+            cin.ignore();
+            auto it = std::find_if(filenames.begin(), filenames.end(),
+                [&picname](const std::string& fullpath) {
+                    return fs::path(fullpath).filename() == picname;
+                });
+            if (it != filenames.end())  break;
+            else cout << "❌ Picture not found. Please enter a valid name from the list." << endl;
+        }
+        img1->LoadImage(folder + "/" + picname);
+        
+        
+        img1->Display_X_Server();
+        BitFieldFilter* filter = new BitFieldFilter();
+        cout << "Please enter the number of method you want to use (1~8): ";
+        cin >> fnum;
+        int fc[fnum] = {0};
+        cin.ignore(); // 清除緩衝區的換行符號
+        cout<<"Please select the filter method(s): " << endl;
+        //cout<<"0. End Bit Field Filter Demo"<<endl;
+        cout<<"0. HorizontalFlip"<<endl;
+        cout<<"1. MosaicFilter"<<endl;
+        cout<<"2. GaussianFilter"<<endl;
+        cout<<"3. LaplacianFilter"<<endl;
+        cout<<"4. FisheyeFilter"<<endl;
+        cout<<"5. ImageRestoration"<<endl;
+        cout<<"6. ImageRotate"<<endl;
+        cout<<"7. HistogramSpecification"<<endl;
+        cout<<"Please enter the number: ";
+        for(int i = 0; i < fnum; ++i){
+            cin >> fc[i];
+            cin.ignore(); // 清除緩衝區的換行符號
+        }
+        int8_t option;
+        if(fnum == 1)  option = 1 << fc[0]; 
+        else if(fnum == 2)  option = (1 << fc[0]) | (1 << fc[1]); 
+        else if(fnum == 3)  option = (1 << fc[0]) | (1 << fc[1]) | (1 << fc[2]);
+        else if(fnum == 4)  option = (1 << fc[0]) | (1 << fc[1]) | (1 << fc[2]) | (1 << fc[3]);
+        else if(fnum == 5)  option = (1 << fc[0]) | (1 << fc[1]) | (1 << fc[2]) | (1 << fc[3]) | (1 << fc[4]);
+        else if(fnum == 6)  option = (1 << fc[0]) | (1 << fc[1]) | (1 << fc[2]) | (1 << fc[3]) | (1 << fc[4]) | (1 << fc[5]);
+        else if(fnum == 7)  option = (1 << fc[0]) | (1 << fc[1]) | (1 << fc[2]) | (1 << fc[3]) | (1 << fc[4]) | (1 << fc[5]) | (1 << fc[6]);
+        else if(fnum == 8)  option = (1 << fc[0]) | (1 << fc[1]) | (1 << fc[2]) | (1 << fc[3]) | (1 << fc[4]) | (1 << fc[5]) | (1 << fc[6]) | (1 << fc[7]);
+        else{
+            cout<<"Invalid choice."<<endl;
+            delete img1;
+            img1 = nullptr;
+            delete filter;
+            filter = nullptr;
+            continue; // Skip to the next iteration
+        }
+        loadCase(option, img1, filter);
+        cout << "Exiting Bit Field Filter Demo." << endl;
+        delete img1;
+        img1 = nullptr;
+        delete filter; 
+        filter = nullptr;
+        break;
+    }
+    // encryption and decryption
     cout<<"**************************************************"<<endl;
     cout<<endl;
     int choice;

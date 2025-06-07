@@ -16,8 +16,8 @@ class Image{
         Image();
         Image(int width, int height);
         virtual ~Image(){};
-        int get_w();
-        int get_h();
+        int get_w() const;
+        int get_h() const;
 
         virtual bool LoadImage(string filename)=0;
         virtual void DumpImage(string filename)=0;

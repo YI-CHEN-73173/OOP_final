@@ -4,6 +4,7 @@
 #include "image_encryption.h"
 using namespace std;
 
+//-------------------------------------------------LSB
 RGBImage* ImageEncryption::encode_LSB(string filename, string password) {
     RGBImage* image = new RGBImage();
     image->LoadImage(filename);
