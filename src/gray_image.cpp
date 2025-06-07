@@ -59,7 +59,7 @@ GrayImage& GrayImage::operator=(GrayImage &gi) {
     }
     return *this;
 }
-bool GrayImage::LoadImage(string filename) { //加載圖片
+bool GrayImage::LoadImage(string filename) {//加載圖片
     if (pixels != nullptr) {
         for (int i = 0; i < h; ++i) {
             delete[] pixels[i];
