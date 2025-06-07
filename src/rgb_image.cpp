@@ -27,7 +27,7 @@ RGBImage::RGBImage(int width, int height, int ***p) : Image(width, height) {
         }
     }
 }
-RGBImage::RGBImage(RGBImage &ri) : Image(ri.get_w(), ri.get_h()) {
+RGBImage::RGBImage(const RGBImage &ri) : Image(ri.get_w(), ri.get_h()) {
     pixels = new int**[h];
     for (int i = 0; i < h; ++i) {
         pixels[i] = new int*[w];
@@ -100,3 +100,4 @@ void RGBImage::Display_X_Server() {
 void RGBImage::Display_ASCII() {
     data_loader.Display_RGB_ASCII(w, h, pixels);
 }
+int*** RGBImage::GetPixels() const { return pixels; }

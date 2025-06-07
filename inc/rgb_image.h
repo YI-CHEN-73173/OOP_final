@@ -13,7 +13,7 @@ class RGBImage : public Image{
         RGBImage();
         RGBImage(int width, int height);
         RGBImage(int width, int height, int ***p);
-        RGBImage(RGBImage &ri); // Copy constructor
+        RGBImage(const RGBImage &ri); // Copy constructor
         ~RGBImage();
 
         RGBImage& operator=(RGBImage &ri);   // Assignment operator
@@ -23,6 +23,7 @@ class RGBImage : public Image{
         void Display_X_Server();
         void Display_ASCII();
         //void Display_CMD() override;
+        int*** GetPixels() const;
 };
 
 #endif

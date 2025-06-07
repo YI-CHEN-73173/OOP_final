@@ -21,7 +21,7 @@ GrayImage::GrayImage(int width, int height, int **p) : Image(width, height) {
         }
     }
 }
-GrayImage::GrayImage(GrayImage &gi): Image(gi.get_w(), gi.get_h()) {
+GrayImage::GrayImage(const GrayImage &gi): Image(gi.get_w(), gi.get_h()) {
     pixels = new int*[h];
     for (int i = 0; i < h; ++i) {
         pixels[i] = new int[w];
@@ -78,3 +78,5 @@ void GrayImage::Display_X_Server() { //彈出視窗顯示圖片
 void GrayImage::Display_ASCII() { //終端機顯示圖片
     data_loader.Display_Gray_ASCII(w, h, pixels);
 }
+
+ int** GrayImage::GetPixels() const { return pixels; }

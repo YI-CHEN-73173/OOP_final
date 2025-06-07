@@ -7,13 +7,26 @@
 
 class BitFieldFilter {
     public :
-        void GrayImage HorizontalFlip(GrayImage &img);
-        void GrayImage MosaicFlip(GrayImage &img, int block_size);
-        void GrayImage GaussianFilter(GrayImage &img, int kernel_size, double sigma);
-        void GrayImage LaplacianFilter(GrayImage &img);
+        GrayImage* HorizontalFlip(GrayImage* img);
+        GrayImage* MosaicFilter(GrayImage* img, int block_size);
+        GrayImage* GaussianFilter(GrayImage* img, int kernel_size, double sigma);
+        GrayImage* LaplacianFilter(GrayImage* img);
+        // bonus
+        GrayImage* FisheyeFilter(GrayImage* img);
+        GrayImage* ImageRestoration(GrayImage* img);
+        GrayImage* ImageRotate(GrayImage* img, float angle_degrees);
+        GrayImage* HistogramSpecification(GrayImage* source, GrayImage* reference);
 
-        void RGBImage HorizontalFlip(RGBImage &img);
-        void RGBImage MosaicFlip(RGBImage &img, int block_size);    
-        void RGBImage GaussianFilter(RGBImage &img, int kernel_size, double sigma);
-        void RGBImage LaplacianFilter(RGBImage &img);        
-}
+        RGBImage* HorizontalFlip(RGBImage* img);
+        RGBImage* MosaicFilter(RGBImage* img, int block_size);    
+        RGBImage* GaussianFilter(RGBImage* img, int kernel_size, double sigma);
+        RGBImage* LaplacianFilter(RGBImage* img);
+        // bonus
+        RGBImage* FisheyeFilter(RGBImage* img);   
+        RGBImage* ImageRestoration(RGBImage* img);
+        RGBImage* ImageRotate(RGBImage* img, float angle_degrees);
+        RGBImage* HistogramSpecification(RGBImage* source, RGBImage* reference);
+     
+};
+
+#endif

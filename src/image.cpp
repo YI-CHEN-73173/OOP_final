@@ -12,9 +12,9 @@ Image::Image(int width, int height){
     w = width;
     h = height;
 }
-int Image::get_w() {
+int Image::get_w() const{
     return w;
 }
-int Image::get_h() {
+int Image::get_h() const{
     return h;
 }
