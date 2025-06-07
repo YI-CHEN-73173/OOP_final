@@ -22,8 +22,9 @@ class GrayImage : public Image{
         void DumpImage(string filename); //導出圖片(jpg/png)
         void Display_X_Server();//彈出視窗顯示圖片
         void Display_ASCII();//終端機顯示圖片
-        int** GetPixels() const;
-        //void Display_CMD() override;
+        //void Display_CMD();
+        int **get_pixels(); //拿pixels
+        void set_pixels(int w, int h, int p); //設定pixels
 };
 
 #endif

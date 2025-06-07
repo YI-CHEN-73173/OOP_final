@@ -100,4 +100,15 @@ void RGBImage::Display_X_Server() {
 void RGBImage::Display_ASCII() {
     data_loader.Display_RGB_ASCII(w, h, pixels);
 }
-int*** RGBImage::GetPixels() const { return pixels; }
+int ***RGBImage::get_pixels() {
+    return pixels;
+}
+void RGBImage::set_pixels(int h, int w, int c, int p) {
+    if (pixels == nullptr) {
+        cout << "Error: no image." << endl;
+    }
+    else{
+        pixels[h][w][c] = p;
+    }
+    return;
+}

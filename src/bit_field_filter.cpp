@@ -7,10 +7,10 @@ using namespace std;
 GrayImage* BitFieldFilter::HorizontalFlip(GrayImage* img){
     int h = img->get_h();
     int w = img->get_w();
-    int **pixels = img->GetPixels();
+    int **pixels = img->get_pixels();
     
     GrayImage* result = new GrayImage(*img);
-    int** newPixels = result->GetPixels();
+    int** newPixels = result->get_pixels();
     
     for(int i = 0; i < h; ++i){
         for(int j = 0;j < w ; ++j){ 
@@ -22,10 +22,10 @@ GrayImage* BitFieldFilter::HorizontalFlip(GrayImage* img){
 RGBImage* BitFieldFilter::HorizontalFlip(RGBImage* img){
     int h = img->get_h();
     int w = img->get_w();
-    int*** pixels = img->GetPixels();
+    int*** pixels = img->get_pixels();
 
     RGBImage* result = new RGBImage(*img);
-    int*** newPixels = result->GetPixels();
+    int*** newPixels = result->get_pixels();
 
     for (int i = 0; i < h; ++i) {
         for (int j = 0; j < w; ++j) {
@@ -40,9 +40,9 @@ RGBImage* BitFieldFilter::HorizontalFlip(RGBImage* img){
 GrayImage* BitFieldFilter::MosaicFilter(GrayImage* img, int block_size){
     int h = img->get_h();
     int w = img->get_w();
-    int** pixels = img->GetPixels();
+    int** pixels = img->get_pixels();
     GrayImage* result = new GrayImage(*img);
-    int** newPixels = result->GetPixels();
+    int** newPixels = result->get_pixels();
 
     for (int i = 0; i < h; i += block_size) {
         for (int j = 0; j < w; j += block_size) {
@@ -68,9 +68,9 @@ GrayImage* BitFieldFilter::MosaicFilter(GrayImage* img, int block_size){
 RGBImage* BitFieldFilter::MosaicFilter(RGBImage* img, int block_size) {
     int h = img->get_h();
     int w = img->get_w();
-    int*** pixels = img->GetPixels();
+    int*** pixels = img->get_pixels();
     RGBImage* result = new RGBImage(*img);
-    int*** newPixels = result->GetPixels();
+    int*** newPixels = result->get_pixels();
 
     for (int i = 0; i < h; i += block_size) {
         for (int j = 0; j < w; j += block_size) {
@@ -119,11 +119,11 @@ vector<vector<double>> GenerateGaussianKernel(int kernel_size, double sigma) {
 GrayImage* BitFieldFilter::GaussianFilter(GrayImage* img, int kernel_size, double sigma) {
     int h = img->get_h();
     int w = img->get_w();
-    int** pixels = img->GetPixels();
+    int** pixels = img->get_pixels();
     std::vector<std::vector<double>> kernel = GenerateGaussianKernel(kernel_size, sigma);
     int center = kernel_size / 2;
     GrayImage* result = new GrayImage(*img);
-    int** resultPixels = result->GetPixels();
+    int** resultPixels = result->get_pixels();
 
     for (int i = center; i < h - center; ++i) {
         for (int j = center; j < w - center; ++j) {
@@ -145,12 +145,12 @@ GrayImage* BitFieldFilter::GaussianFilter(GrayImage* img, int kernel_size, doubl
 RGBImage* BitFieldFilter::GaussianFilter(RGBImage* img, int kernel_size, double sigma) {
     int h = img->get_h();
     int w = img->get_w();
-    int*** pixels = img->GetPixels();
+    int*** pixels = img->get_pixels();
     std::vector<std::vector<double>> kernel = GenerateGaussianKernel(kernel_size, sigma);
     int center = kernel_size / 2;
 
     RGBImage* result = new RGBImage(*img);
-    int*** resultPixels = result->GetPixels();
+    int*** resultPixels = result->get_pixels();
 
     for (int i = center; i < h - center; ++i) {
         for (int j = center; j < w - center; ++j) {
@@ -180,10 +180,10 @@ const int LAPLACIAN_KERNEL[3][3] = {
 GrayImage* BitFieldFilter::LaplacianFilter(GrayImage* img) {
     int h = img->get_h();
     int w = img->get_w();
-    int** pixels = img->GetPixels();
+    int** pixels = img->get_pixels();
 
     GrayImage* result = new GrayImage(*img);
-    int** resultPixels = result->GetPixels();
+    int** resultPixels = result->get_pixels();
 
     for (int i = 1; i < h - 1; ++i) {
         for (int j = 1; j < w - 1; ++j) {
@@ -203,10 +203,10 @@ GrayImage* BitFieldFilter::LaplacianFilter(GrayImage* img) {
 RGBImage* BitFieldFilter::LaplacianFilter(RGBImage* img) {
     int h = img->get_h();
     int w = img->get_w();
-    int*** pixels = img->GetPixels();
+    int*** pixels = img->get_pixels();
 
     RGBImage* result = new RGBImage(*img);
-    int*** resultPixels = result->GetPixels();
+    int*** resultPixels = result->get_pixels();
 
     for (int i = 1; i < h - 1; ++i) {
         for (int j = 1; j < w - 1; ++j) {
@@ -227,10 +227,10 @@ RGBImage* BitFieldFilter::LaplacianFilter(RGBImage* img) {
 GrayImage* BitFieldFilter::FisheyeFilter(GrayImage* img){
     int h = img->get_h();
     int w = img->get_w();
-    int** pixels = img->GetPixels();
+    int** pixels = img->get_pixels();
 
     GrayImage* result = new GrayImage(*img);
-    int** resultPixels = result->GetPixels();
+    int** resultPixels = result->get_pixels();
     
     float cx = w / 2.0;
     float cy = h / 2.0;
@@ -269,10 +269,10 @@ GrayImage* BitFieldFilter::FisheyeFilter(GrayImage* img){
 RGBImage* BitFieldFilter::FisheyeFilter(RGBImage* img) {
     int h = img->get_h();
     int w = img->get_w();
-    int*** pixels = img->GetPixels();
+    int*** pixels = img->get_pixels();
 
     RGBImage* result = new RGBImage(*img);
-    int*** newPixels = result->GetPixels();
+    int*** newPixels = result->get_pixels();
 
     float cx = w / 2.0;
     float cy = h / 2.0;
@@ -315,10 +315,10 @@ RGBImage* BitFieldFilter::FisheyeFilter(RGBImage* img) {
 GrayImage* BitFieldFilter::ImageRestoration(GrayImage* img){
     int h = img->get_h();
     int w = img->get_w();
-    int** pixels = img->GetPixels();
+    int** pixels = img->get_pixels();
 
     GrayImage* result = new GrayImage(*img);
-    int** newPixels = result->GetPixels();
+    int** newPixels = result->get_pixels();
     
     long long sum = 0;
     for(int i = 0; i < h; ++i){
@@ -342,10 +342,10 @@ GrayImage* BitFieldFilter::ImageRestoration(GrayImage* img){
 RGBImage* BitFieldFilter::ImageRestoration(RGBImage* img) {
     int h = img->get_h();
     int w = img->get_w();
-    int*** pixels = img->GetPixels();
+    int*** pixels = img->get_pixels();
 
     RGBImage* result = new RGBImage(*img);
-    int*** newPixels = result->GetPixels();
+    int*** newPixels = result->get_pixels();
 
     for (int c = 0; c < 3; ++c) { // 對 R、G、B 通道各自做處理
         long long sum = 0;
@@ -372,10 +372,10 @@ RGBImage* BitFieldFilter::ImageRestoration(RGBImage* img) {
 GrayImage* BitFieldFilter::ImageRotate(GrayImage* img, float angle_degrees){
     int h = img->get_h();
     int w = img->get_w();
-    int** pixels = img->GetPixels();
+    int** pixels = img->get_pixels();
 
     GrayImage* result = new GrayImage(*img);
-    int** newPixels = result->GetPixels();
+    int** newPixels = result->get_pixels();
     
     float angle_rad = angle_degrees * M_PI / 180.0f;
     float cos_theta = std::cos(angle_rad);
@@ -402,10 +402,10 @@ GrayImage* BitFieldFilter::ImageRotate(GrayImage* img, float angle_degrees){
 RGBImage* BitFieldFilter::ImageRotate(RGBImage* img, float angle_degrees) {
     int h = img->get_h();
     int w = img->get_w();
-    int*** pixels = img->GetPixels();
+    int*** pixels = img->get_pixels();
 
     RGBImage* result = new RGBImage(*img);
-    int*** newPixels = result->GetPixels();
+    int*** newPixels = result->get_pixels();
 
     float angle_rad = angle_degrees * M_PI / 180.0f;
     float cos_theta = std::cos(angle_rad);
@@ -436,11 +436,11 @@ RGBImage* BitFieldFilter::ImageRotate(RGBImage* img, float angle_degrees) {
 GrayImage* BitFieldFilter::HistogramSpecification(GrayImage* source, GrayImage* reference){
     int h = source->get_h();
     int w = source->get_w();
-    int** src_pixels = source->GetPixels();
-    //int** ref_pixels = reference->GetPixels();
+    int** src_pixels = source->get_pixels();
+    //int** ref_pixels = reference->get_pixels();
 
     GrayImage* result = new GrayImage(*source);
-    int** newPixels = result->GetPixels();
+    int** newPixels = result->get_pixels();
 
     int src_hist[256] = {0};
     int ref_hist[256] = {0};
@@ -490,11 +490,11 @@ GrayImage* BitFieldFilter::HistogramSpecification(GrayImage* source, GrayImage* 
 RGBImage* BitFieldFilter::HistogramSpecification(RGBImage* source, RGBImage* reference) {
     int h = source->get_h();
     int w = source->get_w();
-    int*** src_pixels = source->GetPixels();
-    int*** ref_pixels = reference->GetPixels();
+    int*** src_pixels = source->get_pixels();
+    int*** ref_pixels = reference->get_pixels();
 
     RGBImage* result = new RGBImage(*source);
-    int*** newPixels = result->GetPixels();
+    int*** newPixels = result->get_pixels();
     int src_hist[3][256] = {0}; // 0: R, 1: G, 2: B
     int ref_hist[3][256] = {0};
 
