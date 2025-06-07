@@ -1,3 +1,6 @@
+export LANG := en_US.UTF-8
+export LC_ALL := en_US.UTF-8
+
 # ompiler & Linker settings
 CXX = g++
 CXXFLAGS = -I ./inc -I ./third-party/CImg -I ./third-party/libjpeg -I ./Data-Loader -std=c++11

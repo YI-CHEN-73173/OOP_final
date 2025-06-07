@@ -6,27 +6,28 @@
 
 int main(int argc, char *argv[]){
     Image *img1 = new GrayImage();
-    img1->LoadImage("Image-Folder/lena.jpg"); //載入黑白圖片
-    img1->DumpImage("img1.jpg"); //導出圖片(jpg/png)
-    img1->Display_X_Server(); //彈出視窗顯示圖片
-    img1->Display_ASCII(); //終端機顯示圖片
+    img1->LoadImage("Image-Folder/lena.jpg");
+    img1->DumpImage("img1.jpg");
+    img1->Display_X_Server();
+    img1->Display_ASCII();
     delete img1;
-    img1 = nullptr; //避免懸空指標
+    img1 = nullptr;
     
     Image *img2 = new RGBImage();
-    img2->LoadImage("Image-Folder/lena.jpg"); //載入彩色圖片
-    img2->DumpImage("img2.jpg"); //導出圖片(jpg/png)
-    img2->Display_X_Server(); //彈出視窗顯示圖片
-    img2->Display_ASCII(); //終端機顯示圖片
+    img2->LoadImage("Image-Folder/lena.jpg");
+    img2->DumpImage("img2.jpg");
+    img2->Display_X_Server();
+    img2->Display_ASCII();
     delete img2;
-    img2 = nullptr; //避免懸空指標
+    img2 = nullptr;
     
     // some bit field filter design driven code here
 
     // some photo mosaic driven code here
 
-    // encryption and decryption
+    cout<<endl;
     cout<<"**************************************************"<<endl;
+    cout<<endl;
     int choice;
     while(1){
         ImageEncryption* img_ed = new ImageEncryption();
@@ -43,6 +44,7 @@ int main(int argc, char *argv[]){
         
         if(choice == 0){
             cout << "Exiting ImageEncryption Demo." << endl;
+            cout<<endl;
             delete img_ed; 
             img_ed = nullptr;
             break;
@@ -50,14 +52,13 @@ int main(int argc, char *argv[]){
         else if(choice == 1){
             cout << "Demo LSB encoding & decoding." << endl;
             cout<< "Please enter the password: "<<endl;
-            getline(cin, password); // 使用getline以允許空格
-            //cin>> password;
+            getline(cin, password); //getline can get space
             RGBImage* encrypted = img_ed->encode_LSB("Image-Folder/lena.jpg", password);
             
             if (encrypted != nullptr) {
                 encrypted->DumpImage("encrypted_lsb.jpg");
-                //encrypted->Display_X_Server();
-                //encrypted->Display_ASCII();
+                encrypted->Display_X_Server();
+                encrypted->Display_ASCII();
                 //decryption
                 string p = img_ed->decode_LSB(encrypted);
                 if (!p.empty()) {
@@ -77,8 +78,7 @@ int main(int argc, char *argv[]){
             int cus_flag;
             cout << "Demo XOR encoding & decoding" << endl;
             cout<< "Please enter the password: "<<endl;
-            getline(cin, password); // 使用getline以允許空格
-            //cin>> password;
+            getline(cin, password); //getline can get space
             cout<<"Do you want to use a custom key?"<<endl;
             cout<<"1. Yes"<<endl;
             cout<<"2. No"<<endl;
@@ -88,13 +88,12 @@ int main(int argc, char *argv[]){
             if(cus_flag == 1){
                 string key;
                 cout<<"Please enter the key: "<<endl;
-                getline(cin, key); // 使用getline以允許空格
-                //cin>>key;
+                getline(cin, key); //getline can get space
                 RGBImage* encrypted = img_ed->encode_XOR("Image-Folder/lena.jpg", password, key);
                 if (encrypted != nullptr) {
                     encrypted->DumpImage("encrypted_xor.jpg");
-                    //encrypted->Display_X_Server();
-                    //encrypted->Display_ASCII();
+                    encrypted->Display_X_Server();
+                    encrypted->Display_ASCII();
                     //decryption
                     string p = img_ed->decode_XOR(encrypted, key);
                     if (!p.empty()) {
@@ -113,8 +112,8 @@ int main(int argc, char *argv[]){
                 RGBImage* encrypted = img_ed->encode_XOR("Image-Folder/lena.jpg", password);
                 if (encrypted != nullptr) {
                     encrypted->DumpImage("encrypted_xor.jpg");
-                    //encrypted->Display_X_Server();
-                    //encrypted->Display_ASCII();
+                    encrypted->Display_X_Server();
+                    encrypted->Display_ASCII();
                     //decryption
                     string p = img_ed->decode_XOR(encrypted);
                     if (!p.empty()) {
@@ -137,13 +136,12 @@ int main(int argc, char *argv[]){
         else if(choice == 3){
             cout << "Demo Caesar encoding & decoding" << endl;
             cout<< "Please enter the password: "<<endl;
-            getline(cin, password); // 使用getline以允許空格
-            //cin>> password;
+            getline(cin, password); //getline can get space
             RGBImage* encrypted = img_ed->encode_Caesar("Image-Folder/lena.jpg", password);
             if (encrypted != nullptr) {
                 encrypted->DumpImage("encrypted_caesar.jpg");
-                //encrypted->Display_X_Server();
-                //encrypted->Display_ASCII();
+                encrypted->Display_X_Server();
+                encrypted->Display_ASCII();
                 //decryption
                 string p = img_ed->decode_Caesar(encrypted);
                 if (!p.empty()) {
@@ -161,13 +159,12 @@ int main(int argc, char *argv[]){
         else if(choice == 4){
             cout << "Demo Substitution encoding & decoding" << endl;
             cout<< "Please enter the password: "<<endl;
-            getline(cin, password); // 使用getline以允許空格
-            //cin>> password;
+            getline(cin, password); //getline can get space
             RGBImage* encrypted = img_ed->encode_Subs("Image-Folder/lena.jpg", password);
             if (encrypted != nullptr) {
                 encrypted->DumpImage("encrypted_subs.jpg");
-                //encrypted->Display_X_Server();
-                //encrypted->Display_ASCII();
+                encrypted->Display_X_Server();
+                encrypted->Display_ASCII();
                 //decryption
                 string p = img_ed->decode_Subs(encrypted);
                 if (!p.empty()) {
@@ -187,14 +184,17 @@ int main(int argc, char *argv[]){
             delete img_ed; // Clean up memory
             img_ed = nullptr;
             cout<<endl;
+            cout<<"**************************************************"<<endl;
             continue; // Skip to the next iteration
         }
         
         delete img_ed; 
         img_ed = nullptr;
+        cout<<endl;
         cout<<"**************************************************"<<endl;
         cout<<endl;
         
     }
+    
     return 0;
 }

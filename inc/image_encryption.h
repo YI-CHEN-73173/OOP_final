@@ -14,7 +14,6 @@ using namespace std;
 
 class ImageEncryption{
     public:
-        
 		//LSB
 	    RGBImage* encode_LSB(string filename, string password);
         string decode_LSB(RGBImage* i);
@@ -24,7 +23,7 @@ class ImageEncryption{
 	    RGBImage* encode_XOR(string filename, string password, string key); //user key
         string decode_XOR(RGBImage* image); //預設key
 	    string decode_XOR(RGBImage* image, string key); //user key
-		//Ceasar
+		//Caesar
 		RGBImage* encode_Caesar(string filename, string password);
 	    string decode_Caesar(RGBImage* image);
         //Substitution
