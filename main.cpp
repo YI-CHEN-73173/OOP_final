@@ -35,25 +35,25 @@ void LoadImageFilenames(const std::string& folderPath, std::vector<std::string>&
 void loadCase(int8_t option, GrayImage* img, BitFieldFilter* filter)
 {
     if (option & CASE_FLIP) {
-        img = filter->HorizontalFlip(img);
+        filter->HorizontalFlip(img);
     }
     if (option & CASE_MOSAIC) {
-        img = filter->MosaicFilter(img, 10);
+        filter->MosaicFilter(img, 10);
     }
     if (option & CASE_GAUSSIAN) {
-        img = filter->GaussianFilter(img, 5, 1.0);
+        filter->GaussianFilter(img, 5, 1.0);
     }
     if (option & CASE_LAPLACIAN) {
-        img = filter->LaplacianFilter(img);
+        filter->LaplacianFilter(img);
     }
     if (option & CASE_FISHEYE) {
-        img = filter->FisheyeFilter(img);
+        filter->FisheyeFilter(img);
     }
     if (option & CASE_RESTORATION) {
-        img = filter->ImageRestoration(img);
+        filter->ImageRestoration(img);
     }
     if (option & CASE_ROTATION) {
-        img = filter->ImageRotate(img, 30.0f);
+        filter->ImageRotate(img, 30.0f);
     }
     if (option & CASE_SPECIFICATION) {
         cout << "Image List:" << endl;
@@ -73,39 +73,38 @@ void loadCase(int8_t option, GrayImage* img, BitFieldFilter* filter)
                     return fs::path(fullpath).filename() == picname;
                 });
             if (it != filenames.end())  break;
-            else cout << "❌ Picture not found. Please enter a valid name from the list." << endl;
+            else cout << "? Picture not found. Please enter a valid name from the list." << endl;
         }
         GrayImage* img2 = new GrayImage();
         img2->LoadImage("Image-Folder/" + picname);
-        img = filter->HistogramSpecification(img, img2);
+        filter->HistogramSpecification(img, img2);
         delete img2; 
     }
-    img->Display_X_Server();
+    //img->Display_X_Server();
 }
 
 void loadCase(int8_t option, RGBImage* img, BitFieldFilter* filter)
 {
-    
     if (option & CASE_FLIP) {
-        img = filter->HorizontalFlip(img);
+        filter->HorizontalFlip(img);
     }
     if (option & CASE_MOSAIC) {
-        img = filter->MosaicFilter(img, 10);
+        filter->MosaicFilter(img, 10);
     }
     if (option & CASE_GAUSSIAN) {
-        img = filter->GaussianFilter(img, 5, 1.0);
+        filter->GaussianFilter(img, 5, 1.0);
     }
     if (option & CASE_LAPLACIAN) {
-        img = filter->LaplacianFilter(img);
+        filter->LaplacianFilter(img);
     }
     if (option & CASE_FISHEYE) {
-        img = filter->FisheyeFilter(img);
+        filter->FisheyeFilter(img);
     }
     if (option & CASE_RESTORATION) {
-        img = filter->ImageRestoration(img);
+        filter->ImageRestoration(img);
     }
     if (option & CASE_ROTATION) {
-        img = filter->ImageRotate(img, 30.0f);
+        filter->ImageRotate(img, 30.0f);
     }
     if (option & CASE_SPECIFICATION) {
         cout << "Image List:" << endl;
@@ -125,22 +124,24 @@ void loadCase(int8_t option, RGBImage* img, BitFieldFilter* filter)
                     return fs::path(fullpath).filename() == picname;
                 });
             if (it != filenames.end())  break;
-            else cout << "❌ Picture not found. Please enter a valid name from the list." << endl;
+            else cout << "? Picture not found. Please enter a valid name from the list." << endl;
         }
         RGBImage* img2 = new RGBImage();
         img2->LoadImage("Image-Folder/" + picname);
-        img = filter->HistogramSpecification(img, img2);
+        filter->HistogramSpecification(img, img2);
         delete img2; 
     }
-    img->Display_X_Server();
+    //img->Display_X_Server();
+
 }
 
 
 int main(int argc, char *argv[]){
+    
     Image *img1 = new GrayImage();
     img1->LoadImage("Image-Folder/lena.jpg");
     img1->DumpImage("img1.jpg");
-    img1->Display_X_Server();
+    //img1->Display_X_Server();
     img1->Display_ASCII();
     delete img1;
     img1 = nullptr;
@@ -148,14 +149,20 @@ int main(int argc, char *argv[]){
     Image *img2 = new RGBImage();
     img2->LoadImage("Image-Folder/lena.jpg");
     img2->DumpImage("img2.jpg");
-    img2->Display_X_Server();
+    //img2->Display_X_Server();
     img2->Display_ASCII();
     delete img2;
     img2 = nullptr;
-  
+    
+    cout<<endl;
     cout<<"**************************************************"<<endl;
+    cout<<"Demo Bit Field Filter"<<endl;
+    cout<<"**************************************************"<<endl;
+    cout<<endl;
+    
     int fnum;
     while(1){
+    
         cout << "Image List:" << endl;
         vector<string> filenames;
         string folder = "Image-Folder"; 
@@ -167,7 +174,7 @@ int main(int argc, char *argv[]){
         string picname;
         RGBImage* img1 = new RGBImage();
         
-        while (true) {
+        while (true) { //選擇圖片，找到就退出迴圈
             cout << "Which picture do you want to process (enter the name from image list): ";
             cin >> picname; 
             cin.ignore();
@@ -176,19 +183,22 @@ int main(int argc, char *argv[]){
                     return fs::path(fullpath).filename() == picname;
                 });
             if (it != filenames.end())  break;
-            else cout << "❌ Picture not found. Please enter a valid name from the list." << endl;
+            else {
+              cout << "? Picture not found. Please enter a valid name from the list." << endl;
+              cout<<endl;
+              cout<<"**************************************************"<<endl;
+              cout<<endl;
+            }
         }
         img1->LoadImage(folder + "/" + picname);
         
-        
-        img1->Display_X_Server();
+        //img1->Display_X_Server();
         BitFieldFilter* filter = new BitFieldFilter();
         cout << "Please enter the number of method you want to use (1~8): ";
         cin >> fnum;
         int fc[fnum] = {0};
         cin.ignore(); // 清除緩衝區的換行符號
         cout<<"Please select the filter method(s): " << endl;
-        //cout<<"0. End Bit Field Filter Demo"<<endl;
         cout<<"0. HorizontalFlip"<<endl;
         cout<<"1. MosaicFilter"<<endl;
         cout<<"2. GaussianFilter"<<endl;
@@ -213,6 +223,9 @@ int main(int argc, char *argv[]){
         else if(fnum == 8)  option = (1 << fc[0]) | (1 << fc[1]) | (1 << fc[2]) | (1 << fc[3]) | (1 << fc[4]) | (1 << fc[5]) | (1 << fc[6]) | (1 << fc[7]);
         else{
             cout<<"Invalid choice."<<endl;
+            cout<<endl;
+            cout<<"**************************************************"<<endl;
+            cout<<endl;
             delete img1;
             img1 = nullptr;
             delete filter;
@@ -220,14 +233,47 @@ int main(int argc, char *argv[]){
             continue; // Skip to the next iteration
         }
         loadCase(option, img1, filter);
-        cout << "Exiting Bit Field Filter Demo." << endl;
         delete img1;
         img1 = nullptr;
         delete filter; 
         filter = nullptr;
+        
+        int conti;
+        cout<<"Continue to Demo Bit Field Filter?"<<endl;
+        cout<<"1. Yes"<<endl;
+        cout<<"2. No"<<endl;
+        cout<<"Please enter the number: ";
+        cin>>conti;
+        if(conti==1) {
+          cout<<endl;
+          cout<<"**************************************************"<<endl;
+          cout<<endl;
+          continue;
+        }
+        else{
+          cout << "Exiting Bit Field Filter Demo." << endl;
+          cout<<endl;
+          cout<<"**************************************************"<<endl;
+          cout<<endl;
+          break;
+        }
         break;
     }
+    
+    
+    cout<<"**************************************************"<<endl;
+    cout<<"Demo Image Encryption"<<endl;
+    cout<<"**************************************************"<<endl;
+    cout<<endl;
     // encryption and decryption
+    Image *img3 = new RGBImage();
+    img3->LoadImage("Image-Folder/lena.jpg");
+    img3->DumpImage("img2.jpg");
+    //img3->Display_X_Server();
+    img3->Display_ASCII();
+    delete img3;
+    img3 = nullptr;
+    cout<<endl;
     cout<<"**************************************************"<<endl;
     cout<<endl;
     int choice;
@@ -245,7 +291,10 @@ int main(int argc, char *argv[]){
         cin.ignore();
         
         if(choice == 0){
+            cout<<endl;
             cout << "Exiting ImageEncryption Demo." << endl;
+            cout<<endl;
+            cout<<"**************************************************"<<endl;
             cout<<endl;
             delete img_ed; 
             img_ed = nullptr;
@@ -259,8 +308,9 @@ int main(int argc, char *argv[]){
             
             if (encrypted != nullptr) {
                 encrypted->DumpImage("encrypted_lsb.jpg");
-                encrypted->Display_X_Server();
+                //encrypted->Display_X_Server();
                 encrypted->Display_ASCII();
+                cout<<endl;
                 //decryption
                 string p = img_ed->decode_LSB(encrypted);
                 if (!p.empty()) {
@@ -294,8 +344,9 @@ int main(int argc, char *argv[]){
                 RGBImage* encrypted = img_ed->encode_XOR("Image-Folder/lena.jpg", password, key);
                 if (encrypted != nullptr) {
                     encrypted->DumpImage("encrypted_xor.jpg");
-                    encrypted->Display_X_Server();
+                    //encrypted->Display_X_Server();
                     encrypted->Display_ASCII();
+                    cout<<endl;
                     //decryption
                     string p = img_ed->decode_XOR(encrypted, key);
                     if (!p.empty()) {
@@ -314,8 +365,9 @@ int main(int argc, char *argv[]){
                 RGBImage* encrypted = img_ed->encode_XOR("Image-Folder/lena.jpg", password);
                 if (encrypted != nullptr) {
                     encrypted->DumpImage("encrypted_xor.jpg");
-                    encrypted->Display_X_Server();
+                    //encrypted->Display_X_Server();
                     encrypted->Display_ASCII();
+                    cout<<endl;
                     //decryption
                     string p = img_ed->decode_XOR(encrypted);
                     if (!p.empty()) {
@@ -342,8 +394,9 @@ int main(int argc, char *argv[]){
             RGBImage* encrypted = img_ed->encode_Caesar("Image-Folder/lena.jpg", password);
             if (encrypted != nullptr) {
                 encrypted->DumpImage("encrypted_caesar.jpg");
-                encrypted->Display_X_Server();
+                //encrypted->Display_X_Server();
                 encrypted->Display_ASCII();
+                cout<<endl;
                 //decryption
                 string p = img_ed->decode_Caesar(encrypted);
                 if (!p.empty()) {
@@ -365,8 +418,9 @@ int main(int argc, char *argv[]){
             RGBImage* encrypted = img_ed->encode_Subs("Image-Folder/lena.jpg", password);
             if (encrypted != nullptr) {
                 encrypted->DumpImage("encrypted_subs.jpg");
-                encrypted->Display_X_Server();
+                //encrypted->Display_X_Server();
                 encrypted->Display_ASCII();
+                cout<<endl;
                 //decryption
                 string p = img_ed->decode_Subs(encrypted);
                 if (!p.empty()) {
@@ -387,6 +441,7 @@ int main(int argc, char *argv[]){
             img_ed = nullptr;
             cout<<endl;
             cout<<"**************************************************"<<endl;
+            cout<<endl;
             continue; // Skip to the next iteration
         }
         
