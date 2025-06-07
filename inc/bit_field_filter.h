@@ -7,25 +7,25 @@
 
 class BitFieldFilter {
     public :
-        GrayImage* HorizontalFlip(GrayImage* img);
-        GrayImage* MosaicFilter(GrayImage* img, int block_size);
-        GrayImage* GaussianFilter(GrayImage* img, int kernel_size, double sigma);
-        GrayImage* LaplacianFilter(GrayImage* img);
+        void HorizontalFlip(GrayImage* img);
+        void MosaicFilter(GrayImage* img, int block_size);
+        void GaussianFilter(GrayImage* img, int kernel_size, double sigma);
+        void LaplacianFilter(GrayImage* img);
         // bonus
-        GrayImage* FisheyeFilter(GrayImage* img);
-        GrayImage* ImageRestoration(GrayImage* img);
-        GrayImage* ImageRotate(GrayImage* img, float angle_degrees);
-        GrayImage* HistogramSpecification(GrayImage* source, GrayImage* reference);
+        void FisheyeFilter(GrayImage* img);
+        void ImageRestoration(GrayImage* img);
+        void ImageRotate(GrayImage* img, float angle_degrees);
+        void HistogramSpecification(GrayImage* source, GrayImage* reference);
 
-        RGBImage* HorizontalFlip(RGBImage* img);
-        RGBImage* MosaicFilter(RGBImage* img, int block_size);    
-        RGBImage* GaussianFilter(RGBImage* img, int kernel_size, double sigma);
-        RGBImage* LaplacianFilter(RGBImage* img);
+        void HorizontalFlip(RGBImage* img);
+        void MosaicFilter(RGBImage* img, int block_size);    
+        void GaussianFilter(RGBImage* img, int kernel_size, double sigma);
+        void LaplacianFilter(RGBImage* img);
         // bonus
-        RGBImage* FisheyeFilter(RGBImage* img);   
-        RGBImage* ImageRestoration(RGBImage* img);
-        RGBImage* ImageRotate(RGBImage* img, float angle_degrees);
-        RGBImage* HistogramSpecification(RGBImage* source, RGBImage* reference);
+        void FisheyeFilter(RGBImage* img);   
+        void ImageRestoration(RGBImage* img);
+        void ImageRotate(RGBImage* img, float angle_degrees);
+        void HistogramSpecification(RGBImage* source, RGBImage* reference);
      
 };
 
