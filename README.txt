@@ -1,5 +1,5 @@
 =========================
-Image Processing 專案說明
+Image Processing
 =========================
 
 編譯方式
@@ -17,18 +17,18 @@ Image Processing 專案說明
 
 【Demo Bit Field Filter】
 
-1. 選擇要處理的圖片檔名：
-   圖片清單：
+1. 輸入要處理的圖片檔名：
+   
        3-2.jpg   1-2.jpg   2-2.jpg   1-1.jpg   truck.png
        4-1.jpg   4-2.jpg   3-1.jpg   2-1.jpg   lena.jpg
-   提示輸入：
+   
        Which picture do you want to process (enter the name from image list):
 
 2. 輸入要處理幾種方式：
        Please enter the number of method you want to use (1~8):
 
-3. 請輸入要處理的方式（以空格隔開）：
-   處理方式列表：
+3. 請輸入要處理的方式（以空格隔開）：e.g. 0 1 2 3 4 5 6 7
+   
        0. HorizontalFlip
        1. MosaicFilter
        2. GaussianFilter
@@ -37,10 +37,12 @@ Image Processing 專案說明
        5. ImageRestoration
        6. ImageRotate
        7. HistogramSpecification
-   提示輸入：
+
        Please enter the number:
 
 4. 若選擇方法 7（HistogramSpecification），請再選擇一張圖片，輸入方式同步驟 1。
+
+※ 處理後結果將顯示於畫面或彈出視窗中
 
 5. 選擇是否要繼續處理其他圖片：
        Continue to Demo Bit Field Filter?
@@ -84,6 +86,7 @@ Image Processing 專案說明
 記憶體檢查
 -------------------------
     make check
+    //須確保已將Display_Gray_X_Server與Display_RGB_X_Server註解掉
 
 
 專案結構
@@ -141,5 +144,3 @@ Image Processing 專案說明
     ├── catimg
     ├── CImg
     └── libjpeg
-
-
