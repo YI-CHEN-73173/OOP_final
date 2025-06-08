@@ -1,124 +1,93 @@
+=========================
+Image Processing 專案說明
+=========================
 
-# 🖼️ Image Processing
+編譯方式
+-------------------------
+【安裝與編譯】
+    make install    # 安裝第三方函式庫（第一次執行需使用）
+    make            # 編譯整個專案
 
-## 🔧 編譯方式
+【執行程式】
+    ./Image_Processing
 
-### 📦 安裝與編譯
 
-```bash
-make install    # 安裝第三方函式庫（第一次執行需使用）
-make            # 編譯整個專案
-```
+使用說明
+-------------------------
 
-### ▶️ 執行程式
+【Demo Bit Field Filter】
 
-```bash
-./Image_Processing
-```
+1. 選擇要處理的圖片檔名：
+   圖片清單：
+       3-2.jpg   1-2.jpg   2-2.jpg   1-1.jpg   truck.png
+       4-1.jpg   4-2.jpg   3-1.jpg   2-1.jpg   lena.jpg
+   提示輸入：
+       Which picture do you want to process (enter the name from image list):
 
----
+2. 輸入要處理幾種方式：
+       Please enter the number of method you want to use (1~8):
 
-## 🧪 使用說明
+3. 請輸入要處理的方式（以空格隔開）：
+   處理方式列表：
+       0. HorizontalFlip
+       1. MosaicFilter
+       2. GaussianFilter
+       3. LaplacianFilter
+       4. FisheyeFilter
+       5. ImageRestoration
+       6. ImageRotate
+       7. HistogramSpecification
+   提示輸入：
+       Please enter the number:
 
-### 🎛️ Demo Bit Field Filter
+4. 若選擇方法 7（HistogramSpecification），請再選擇一張圖片，輸入方式同步驟 1。
 
-1. **選擇要處理的圖片檔名：**
+5. 選擇是否要繼續處理其他圖片：
+       Continue to Demo Bit Field Filter?
 
-   **Image List:**
-   ```
-   3-2.jpg   1-2.jpg   2-2.jpg   1-1.jpg   truck.png
-   4-1.jpg   4-2.jpg   3-1.jpg   2-1.jpg   lena.jpg
-   ```
-   ```
-   Which picture do you want to process (enter the name from image list):
-   ```
+       1. Yes
+       2. No
 
-2. **請輸入要處理幾種方式：**
-   ```
-   Please enter the number of method you want to use (1~8):
-   ```
+       Please enter the number:
 
-3. **請輸入要處理的方式（以空格隔開）： e.g. 0 1 2 3 4 5 6 7**
-   ```
-   0. HorizontalFlip  
-   1. MosaicFilter  
-   2. GaussianFilter  
-   3. LaplacianFilter  
-   4. FisheyeFilter  
-   5. ImageRestoration  
-   6. ImageRotate  
-   7. HistogramSpecification  
-   ```
-   ```
-   Please enter the number:
-   ```
 
-4. **若選擇方法 7（HistogramSpecification），請再選擇一張圖片，輸入方式同步驟 1。**
-   
-> 📌 選擇完後，程式將對圖片進行對應的處理，結果會顯示於畫面或彈出視窗中。
+【Demo Image Encryption】
 
-5. **選擇是否要繼續處理其他圖片：**
-   ```
-   Continue to Demo Bit Field Filter?
+1. 選擇要使用的加解密方法（選 0 結束）：
+       Please select the encryption method:
 
-   1. Yes
-   2. No
+       0. End ImageEncryption Demo
+       1. LSB encoding
+       2. XOR encoding
+       3. Caesar encoding
+       4. Substitution encoding
 
-   Please enter the number:
-   ```
+       Please enter the number:
 
----
+2. 輸入要加密的字串：
+       Please enter the password:
 
-### 🔐 Demo Image Encryption
+3. 若選擇方法 2（XOR），可選擇是否輸入自訂 key：
+       Do you want to use a custom key?
 
-1. **選擇要使用的加解密方法（選 0 結束）：**
-   ```
-   Please select the encryption method:
+       1. Yes
+       2. No
 
-   0. End ImageEncryption Demo
-   1. LSB encoding
-   2. XOR encoding
-   3. Caesar encoding
-   4. Substitution encoding
+       Please enter the number:
 
-   Please enter the number:
-   ```
+4. 若選擇自訂，請輸入 key：
+       Please enter the key:
 
-2. **輸入要加密的字串：**
-   ```
-   Please enter the password:
-   ```
+※ 加密後圖片與還原結果將顯示於畫面或彈出視窗中
 
-3. **若選擇方法 2（XOR），可選擇是否輸入自訂 key：**
-   ```
-   Do you want to use a custom key?
 
-   1. Yes
-   2. No
+記憶體檢查
+-------------------------
+    make check
 
-   Please enter the number:
-   ```
 
-4. **若選擇自訂，請輸入 key：**
-   ```
-   Please enter the key:
-   ```
-
-> 📌 輸入密碼與 key 後，程式將加密圖片並能解密還原，結果會顯示於畫面或彈出視窗中。
-
----
-
-## 🔍 記憶體檢查
-
-```bash
-make check
-```
-
----
-
-## 📁 專案結構
-
-```
+專案結構
+-------------------------
 .
 ├── Data-Loader
 │   ├── data_loader.cpp
@@ -172,4 +141,5 @@ make check
     ├── catimg
     ├── CImg
     └── libjpeg
-```
+
+
