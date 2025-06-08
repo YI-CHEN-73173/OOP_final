@@ -30,7 +30,7 @@ Which picture do you want to process (enter the name from image list):
 2.請輸入要處理幾種方式  
 Please enter the number of method you want to use (1~8):
 ****
-3.請輸入要處理的方式（以空格隔開）  
+3.請輸入要處理的方式（以空格隔開）e.g. 0 1 2 3 4 5 6 7  
 Please select the filter method(s):  
 
 0. HorizontalFlip  
