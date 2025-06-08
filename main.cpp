@@ -81,6 +81,7 @@ void loadCase(int8_t option, GrayImage* img, BitFieldFilter* filter)
         delete img2; 
     }
     //img->Display_X_Server();
+    //img->DumpImage("img1.jpg");
 }
 
 void loadCase(int8_t option, RGBImage* img, BitFieldFilter* filter)
@@ -132,6 +133,7 @@ void loadCase(int8_t option, RGBImage* img, BitFieldFilter* filter)
         delete img2; 
     }
     //img->Display_X_Server();
+    //img->DumpImage("img1.jpg");
 
 }
 
@@ -142,15 +144,15 @@ int main(int argc, char *argv[]){
     img1->LoadImage("Image-Folder/lena.jpg");
     img1->DumpImage("img1.jpg");
     //img1->Display_X_Server();
-    img1->Display_ASCII();
+    //img1->Display_ASCII();
     delete img1;
     img1 = nullptr;
     
     Image *img2 = new RGBImage();
     img2->LoadImage("Image-Folder/lena.jpg");
     img2->DumpImage("img2.jpg");
-    //img2->Display_X_Server();
-    img2->Display_ASCII();
+    //img2->();
+    //img2->Display_ASCII();
     delete img2;
     img2 = nullptr;
     
@@ -270,7 +272,7 @@ int main(int argc, char *argv[]){
     img3->LoadImage("Image-Folder/lena.jpg");
     img3->DumpImage("img2.jpg");
     //img3->Display_X_Server();
-    img3->Display_ASCII();
+    //img3->Display_ASCII();
     delete img3;
     img3 = nullptr;
     cout<<endl;
